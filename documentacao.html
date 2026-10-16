@@ -1,0 +1,954 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Catálogo de Produtos com Tags Automáticas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tinta:#1B1D21; --tinta2:#2C2E36; --cinza:#61666D; --cinza-claro:#898F97;
+  --verde:#2E6B3E; --verde-fundo:#E7EFE6;
+  --azul:#3A5B85;  --azul-fundo:#E8EDF5;
+  --vermelho:#B5341A; --vermelho-fundo:#FAE9E2;
+  --bege:#F3EEE7; --bege2:#EEEADF; --borda:#CFC9C0;
+  --papel:#F9F8F3;
+  --titulo:'Poppins',system-ui,sans-serif;
+  --corpo:'Carlito','Lato',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{background:#e9e6df}
+body{
+  font-family:var(--corpo); color:var(--tinta2);
+  font-size:10.6pt; line-height:1.62; margin:0;
+}
+.pagina{
+  background:var(--papel); width:210mm; min-height:297mm;
+  padding:20mm 18mm 16mm; margin:0 auto 10mm;
+  position:relative; box-shadow:0 2px 14px rgba(0,0,0,.13);
+}
+
+/* ---------- tipografia ---------- */
+h1,h2,h3,h4{font-family:var(--titulo); color:var(--tinta); margin:0; font-weight:700}
+h2{font-size:19pt; line-height:1.2; letter-spacing:-.4px}
+h3{font-size:12.6pt; margin:22px 0 7px; font-weight:600; letter-spacing:-.1px}
+h4{font-size:10.6pt; margin:16px 0 5px; font-weight:600; color:var(--tinta2)}
+p{margin:0 0 10px}
+strong{color:var(--tinta); font-weight:700}
+em{color:var(--cinza)}
+ul{margin:0 0 10px; padding-left:17px}
+li{margin-bottom:4px}
+a{color:var(--azul)}
+
+/* ---------- cabeçalho de seção ---------- */
+.secao{
+  display:flex; align-items:flex-start; gap:13px;
+  border-bottom:2px solid var(--borda); padding-bottom:12px; margin-bottom:18px;
+}
+.numero{
+  font-family:var(--titulo); font-weight:700; font-size:20pt; line-height:1;
+  color:var(--azul); min-width:38px; padding-top:1px;
+}
+.secao .sub{
+  font-size:9.4pt; color:var(--cinza-claro); margin-top:3px;
+  text-transform:uppercase; letter-spacing:1.3px; font-family:var(--titulo); font-weight:600;
+}
+
+/* ---------- caixas ---------- */
+.caixa{
+  border-radius:7px; padding:13px 16px; margin:14px 0;
+  border-left:4px solid; break-inside:avoid;
+}
+.caixa p:last-child{margin-bottom:0}
+.caixa .rotulo{
+  font-family:var(--titulo); font-weight:600; font-size:8.6pt;
+  text-transform:uppercase; letter-spacing:1.2px; display:block; margin-bottom:5px;
+}
+.azul{background:var(--azul-fundo); border-color:var(--azul)}
+.azul .rotulo{color:var(--azul)}
+.verde{background:var(--verde-fundo); border-color:var(--verde)}
+.verde .rotulo{color:var(--verde)}
+.alerta{background:var(--vermelho-fundo); border-color:var(--vermelho)}
+.alerta .rotulo{color:var(--vermelho)}
+.neutra{background:var(--bege); border-color:var(--borda)}
+.neutra .rotulo{color:var(--cinza)}
+
+/* ---------- números em destaque ---------- */
+.metricas{display:flex; gap:11px; margin:16px 0; break-inside:avoid}
+.metrica{
+  flex:1; background:#fff; border:1px solid var(--borda); border-radius:7px;
+  padding:12px 13px; text-align:center;
+}
+.metrica .n{
+  font-family:var(--titulo); font-weight:700; font-size:21pt;
+  line-height:1.05; color:var(--azul); display:block;
+}
+.metrica .n.v{color:var(--verde)}
+.metrica .n.r{color:var(--vermelho)}
+.metrica .r2{font-size:8.5pt; color:var(--cinza); line-height:1.35; display:block; margin-top:4px}
+
+/* ---------- antes e depois ---------- */
+.comparacao{display:flex; gap:11px; margin:14px 0; break-inside:avoid}
+.comparacao > div{flex:1; border-radius:7px; padding:11px 14px; font-size:9.8pt}
+.antes{background:var(--vermelho-fundo)}
+.depois{background:var(--verde-fundo)}
+.comparacao h5{
+  font-family:var(--titulo); font-size:8.6pt; text-transform:uppercase;
+  letter-spacing:1.1px; margin:0 0 6px; font-weight:600;
+}
+.antes h5{color:var(--vermelho)}
+.depois h5{color:var(--verde)}
+.comparacao code{background:rgba(255,255,255,.65)}
+
+/* ---------- código / exemplos ---------- */
+code{
+  font-family:'SF Mono',Menlo,monospace; font-size:9pt;
+  background:var(--bege2); padding:1px 5px; border-radius:3px; color:var(--tinta);
+}
+pre{
+  font-family:'SF Mono',Menlo,monospace; font-size:8.9pt; line-height:1.55;
+  background:#fff; border:1px solid var(--borda); border-radius:7px;
+  padding:13px 15px; margin:13px 0; overflow:hidden; break-inside:avoid; color:var(--tinta2);
+}
+pre.escuro{background:var(--tinta); border-color:var(--tinta); color:#E8E6E1}
+
+/* ---------- tabelas ---------- */
+table{width:100%; border-collapse:collapse; margin:14px 0; font-size:9.9pt; break-inside:avoid}
+th{
+  font-family:var(--titulo); font-weight:600; font-size:8.6pt; text-align:left;
+  text-transform:uppercase; letter-spacing:.9px; color:var(--cinza);
+  border-bottom:1.5px solid var(--borda); padding:0 9px 7px;
+}
+td{padding:8px 9px; border-bottom:1px solid #E6E2DA; vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.num{font-family:var(--titulo); font-weight:600; color:var(--tinta)}
+
+/* ---------- fluxo ---------- */
+.fluxo{margin:18px 0; break-inside:avoid}
+.passo{display:flex; gap:13px; align-items:flex-start; margin-bottom:11px}
+.bolha{
+  min-width:26px; height:26px; border-radius:50%; background:var(--azul); color:#fff;
+  font-family:var(--titulo); font-weight:600; font-size:10pt;
+  display:flex; align-items:center; justify-content:center; margin-top:1px;
+}
+.passo .t{font-weight:700; color:var(--tinta); display:block; font-size:10.4pt}
+.passo .d{color:var(--cinza); font-size:9.7pt}
+
+/* ---------- capa ----------
+   A cor de fundo sai daqui. Para trocar, mude --capa-fundo e, se o fundo
+   ficar claro, --capa-tinta junto. Opções da própria paleta do documento:
+     azul    #3A5B85   (atual)
+     verde   #2E6B3E
+     grafite #1B1D21
+     terra   #B5341A                                                      */
+.capa{
+  --capa-fundo:#3A5B85;
+  --capa-tinta:#FFFFFF;
+  background:var(--capa-fundo); color:var(--capa-tinta);
+  display:flex; flex-direction:column; justify-content:center; min-height:257mm;
+  padding:20mm 18mm; position:relative; overflow:hidden;
+}
+/* Faixa diagonal translúcida, para o fundo não ficar chapado. */
+.capa::after{
+  content:''; position:absolute; right:-70mm; top:-50mm;
+  width:170mm; height:170mm; border-radius:50%;
+  background:rgba(255,255,255,.055);
+}
+.capa > *{position:relative; z-index:1}
+.capa .disc{
+  font-family:var(--titulo); font-weight:600; font-size:9.6pt; letter-spacing:2.4px;
+  text-transform:uppercase; color:rgba(255,255,255,.62); margin-bottom:18px;
+}
+.capa h1{
+  font-size:34pt; line-height:1.1; letter-spacing:-1.2px;
+  margin-bottom:18px; color:var(--capa-tinta);
+}
+.capa .linha{width:62px; height:4px; background:rgba(255,255,255,.55); margin-bottom:22px}
+.capa .lead{
+  font-size:12.4pt; line-height:1.62; color:rgba(255,255,255,.88); max-width:132mm;
+}
+.capa .tags{display:flex; gap:8px; margin-top:30px; flex-wrap:wrap}
+.capa .tag{
+  font-family:var(--titulo); font-weight:600; font-size:8.4pt;
+  letter-spacing:1.1px; text-transform:uppercase;
+  border:1px solid rgba(255,255,255,.3); border-radius:20px;
+  padding:5px 13px; color:rgba(255,255,255,.8);
+}
+.capa .rodape{
+  margin-top:40px; padding-top:16px;
+  border-top:1px solid rgba(255,255,255,.22);
+  font-size:9.6pt; color:rgba(255,255,255,.6);
+}
+
+/* ---------- sumário ---------- */
+.sumario{margin-top:10px}
+.item{
+  display:flex; gap:13px; padding:9px 0; border-bottom:1px solid #E6E2DA; align-items:baseline;
+}
+.item .i{
+  font-family:var(--titulo); font-weight:700; color:var(--azul);
+  min-width:28px; font-size:11pt;
+}
+.item .tt{font-weight:700; color:var(--tinta); flex:1}
+.item .dd{color:var(--cinza); font-size:9.6pt}
+
+/* ---------- rodapé de página ---------- */
+.rodape-pg{
+  position:absolute; bottom:11mm; left:18mm; right:18mm;
+  display:flex; justify-content:space-between;
+  font-size:8.3pt; color:var(--cinza-claro);
+  border-top:1px solid #E6E2DA; padding-top:6px;
+}
+
+/* ---------- impressão ---------- */
+@media print{
+  /* A folha inteira é pintada pela própria .pagina.
+     Antes, a margem ficava na @page: o fundo bege cobria só a área interna e
+     sobrava uma moldura branca em volta, visível como um retângulo dentro da
+     folha. Zerando a margem da folha e passando o espaçamento para o padding
+     da página, o fundo vai de borda a borda. */
+  @page{size:A4; margin:0}
+  html,body{background:var(--papel)}
+  body{font-size:9.5pt; line-height:1.55}
+
+  .pagina{
+    box-shadow:none; margin:0;
+    width:210mm; height:297mm;
+    padding:17mm 16mm 15mm;
+    background:var(--papel);
+    page-break-after:always;
+    overflow:hidden; position:relative;
+  }
+  .pagina:last-child{page-break-after:auto}
+  .rodape-pg{position:absolute; bottom:10mm; left:16mm; right:16mm; font-size:7.8pt}
+
+  /* A capa mantém o respiro das laterais e o fundo azul cobre a folha toda.
+     O background precisa ser repetido aqui: a capa também é uma .pagina, e a
+     regra acima pinta todas elas de bege. Sem esta linha, a capa sai bege com
+     o texto branco por cima — ilegível. */
+  .capa{
+    height:297mm; min-height:0; padding:0 20mm;
+    justify-content:center;
+    background:var(--capa-fundo);
+  }
+  .capa h1{font-size:31pt}
+  .capa .lead{font-size:11.6pt}
+
+  /* Espaçamentos comprimidos, para o conteúdo caber na altura da página.
+     A fonte Carlito do documento de referência não existe em toda máquina, e a
+     reserva ocupa mais largura — com os tamanhos de tela, seis seções
+     transbordavam para uma segunda página impressa. */
+  h2{font-size:17pt}
+  h3{font-size:11.4pt; margin:15px 0 5px}
+  h4{font-size:10pt; margin:12px 0 4px}
+  p{margin:0 0 8px}
+  .secao{padding-bottom:9px; margin-bottom:13px}
+  .numero{font-size:18pt}
+  .caixa{padding:10px 13px; margin:10px 0}
+  pre{padding:10px 13px; margin:10px 0; font-size:8.2pt; line-height:1.5}
+  table{margin:10px 0; font-size:9pt}
+  td{padding:6px 8px}
+  .metricas,.comparacao{margin:11px 0; gap:9px}
+  .metrica{padding:9px 10px}
+  .metrica .n{font-size:18pt}
+  .fluxo{margin:13px 0}
+  .passo{margin-bottom:8px}
+  ul{margin-bottom:8px}
+
+  *{-webkit-print-color-adjust:exact; print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ CAPA ============ -->
+<section class="pagina capa">
+  <div class="disc">Estrutura de Dados 1 &middot; Projeto 4</div>
+  <h1>Catálogo de Produtos<br>com Tags Automáticas</h1>
+  <div class="linha"></div>
+  <p class="lead">
+    Um sistema que lê a descrição de um produto, descobre sozinho em que categoria
+    ele se encaixa e o guarda de um jeito que torna a busca praticamente
+    instantânea — mesmo com dezenas de milhares de produtos.
+  </p>
+  <div class="tags">
+    <span class="tag">Tabela de dispersão</span>
+    <span class="tag">Índice invertido</span>
+    <span class="tag">IA local</span>
+  </div>
+  <div class="rodape">Documentação do sistema &middot; decisões, medições e resultados</div>
+</section>
+
+<!-- ============ SUMÁRIO ============ -->
+<section class="pagina">
+  <div class="secao">
+    <div class="numero">&mdash;</div>
+    <div><h2>O que você vai encontrar aqui</h2>
+    <div class="sub">Sumário</div></div>
+  </div>
+
+  <div class="sumario">
+    <div class="item"><span class="i">01</span><span class="tt">O que é este sistema</span><span class="dd">O problema e a solução</span></div>
+    <div class="item"><span class="i">02</span><span class="tt">Receber o produto</span><span class="dd">Nome, descrição e a limpeza invisível</span></div>
+    <div class="item"><span class="i">03</span><span class="tt">A inteligência artificial</span><span class="dd">As sete melhorias que precisei fazer</span></div>
+    <div class="item"><span class="i">04</span><span class="tt">Guardar na tabela hash</span><span class="dd">O armário de gavetas numeradas</span></div>
+    <div class="item"><span class="i">05</span><span class="tt">Buscar pelas tags</span><span class="dd">Virar a chave do avesso</span></div>
+    <div class="item"><span class="i">06</span><span class="tt">Os erros que cometi</span><span class="dd">E o que eles mudaram no projeto</span></div>
+    <div class="item"><span class="i">07</span><span class="tt">Limites e como usar</span><span class="dd">O que o sistema não faz</span></div>
+  </div>
+
+  <div class="caixa azul" style="margin-top:26px">
+    <span class="rotulo">A ideia central</span>
+    <p>Toda vez que medi em vez de assumir, o resultado foi diferente do que eu
+    esperava — e <strong>duas decisões do projeto mudaram por causa disso</strong>.
+    Este documento registra o caminho, não só o destino.</p>
+  </div>
+
+  <div class="rodape-pg"><span>Catálogo de Produtos com Tags Automáticas</span><span>2</span></div>
+</section>
+
+<!-- ============ 01 ============ -->
+<section class="pagina">
+  <div class="secao">
+    <div class="numero">01</div>
+    <div><h2>O que é este sistema</h2>
+    <div class="sub">O problema e a solução</div></div>
+  </div>
+
+  <p>Imagine uma loja online com cem mil produtos. Alguém procura por
+  <em>"tênis azul de corrida"</em>. Como o site encontra isso rápido?</p>
+
+  <p>O jeito óbvio seria abrir produto por produto, conferir se bate com o pedido
+  e montar a lista. Funciona com dez produtos. Com cem mil, o cliente desiste
+  antes de a página carregar.</p>
+
+  <h3>As duas coisas que o sistema faz</h3>
+
+  <div class="caixa verde">
+    <span class="rotulo">Primeiro &middot; categorizar sozinho</span>
+    <p>Ao cadastrar um <strong>"Tênis azul para corrida em asfalto"</strong>, o
+    sistema lê o texto e decide por conta própria que aquilo é um calçado, é
+    esportivo, serve para corrida e é azul. Essas palavras são as <em>tags</em>,
+    e ninguém precisa digitá-las.</p>
+  </div>
+
+  <div class="caixa azul">
+    <span class="rotulo">Segundo &middot; guardar de forma inteligente</span>
+    <p>Em vez de uma lista que precisa ser percorrida, usei uma estrutura em que
+    encontrar algo <strong>não depende de quantas coisas existem guardadas</strong>.
+    É a parte que a disciplina avalia, e onde está o esforço maior.</p>
+  </div>
+
+  <h3>O caminho de um produto</h3>
+
+  <div class="fluxo">
+    <div class="passo"><div class="bolha">1</div><div>
+      <span class="t">O texto é limpo</span>
+      <span class="d">Minúsculas, sem acento, sem pontuação, sem palavras de ligação</span>
+    </div></div>
+    <div class="passo"><div class="bolha">2</div><div>
+      <span class="t">As palavras viram tags</span>
+      <span class="d">calçado, esporte, azul, corrida, asfalto</span>
+    </div></div>
+    <div class="passo"><div class="bolha">3</div><div>
+      <span class="t">O produto é guardado</span>
+      <span class="d">E cada tag vira um atalho que leva direto até ele</span>
+    </div></div>
+  </div>
+
+  <div class="metricas">
+    <div class="metrica"><span class="n v">&lt;0,1s</span><span class="r2">para cadastrar um produto</span></div>
+    <div class="metrica"><span class="n v">&lt;0,001s</span><span class="r2">para buscar</span></div>
+    <div class="metrica"><span class="n">50 mil</span><span class="r2">produtos no teste</span></div>
+  </div>
+
+  <div class="rodape-pg"><span>01 &middot; O que é este sistema</span><span>3</span></div>
+</section>
+
+<!-- ============ 02 ============ -->
+<section class="pagina">
+  <div class="secao">
+    <div class="numero">02</div>
+    <div><h2>Receber o nome e a descrição</h2>
+    <div class="sub">Parte 1 do enunciado</div></div>
+  </div>
+
+  <p>O sistema recebe duas informações: um nome (<strong>"Tênis azul"</strong>) e
+  uma descrição (<strong>"para corrida em asfalto"</strong>). A partir daí ele
+  cuida de tudo: gera um código de identificação, cria as tags e guarda.</p>
+
+  <h3>Por que separar nome e descrição</h3>
+  <p>Poderia ser um texto só. Separei porque as duas coisas têm pesos diferentes:
+  o nome diz o que o produto <strong>é</strong>, a descrição diz <strong>como</strong>
+  ele é. As tags vindas do nome aparecem primeiro na lista, porque são as mais
+  importantes para quem procura.</p>
+
+  <h3>A parte invisível: arrumar o texto antes de usar</h3>
+  <p>Parece um detalhe e é fundamental. As pessoas escrevem de formas diferentes:</p>
+
+  <pre>  "Tênis Azul"      "tenis azul"      "TÊNIS, AZUL!"</pre>
+
+  <p>São a mesma coisa para uma pessoa e <strong>três textos completamente
+  diferentes</strong> para um computador. Se guardasse do jeito que vem, quem
+  cadastrasse com acento nunca seria encontrado por quem buscasse sem.</p>
+
+  <table>
+    <tr><th style="width:38%">o que é feito</th><th>por quê</th></tr>
+    <tr><td>Vira minúsculo</td><td>"TÊNIS" e "tênis" passam a ser o mesmo</td></tr>
+    <tr><td>Perde os acentos</td><td>"tênis" vira "tenis"</td></tr>
+    <tr><td>Pontuação vira espaço</td><td>Para "azul,corrida" não virar "azulcorrida"</td></tr>
+    <tr><td>Palavras de ligação saem</td><td>"para", "de", "em" estão em toda descrição e não distinguem nada</td></tr>
+  </table>
+
+  <div class="caixa neutra">
+    <span class="rotulo">O detalhe que faz funcionar</span>
+    <p>A mesma limpeza é aplicada nos <strong>dois lados</strong>: ao cadastrar e
+    ao buscar. É isso que faz alguém digitar <code>CALÇADO</code> e encontrar um
+    produto guardado como <code>calcado</code>.</p>
+  </div>
+
+  <div class="rodape-pg"><span>02 &middot; Receber o produto</span><span>4</span></div>
+</section>
+
+<!-- ============ 03 ============ -->
+<section class="pagina">
+  <div class="secao">
+    <div class="numero">03</div>
+    <div><h2>A inteligência artificial</h2>
+    <div class="sub">Parte 2 do enunciado</div></div>
+  </div>
+
+  <p>Cada produto é analisado por um modelo de inteligência artificial que roda
+  <strong>dentro do próprio computador</strong>. Ele lê o nome e a descrição e
+  responde a que categoria o produto pertence.</p>
+
+  <div class="caixa verde">
+    <span class="rotulo">Roda local, não na internet</span>
+    <p>Não precisa de senha, não precisa de conexão, não custa nada por uso e
+    nenhum dado sai da máquina. É o modelo do Apple Intelligence, já instalado
+    em Macs recentes.</p>
+  </div>
+
+  <h3>A IA de fábrica não serve</h3>
+  <p>Ligar a IA foi fácil. Fazer com que ela entregasse algo aproveitável deu
+  trabalho. <strong>Foram sete melhorias</strong>, e cada uma veio de um problema
+  concreto que apareceu testando.</p>
+
+  <h4>1 &middot; Impedir que ela inventasse palavras</h4>
+  <p>A primeira versão pedia: <em>"responda com as tags separadas por vírgula"</em>.
+  Perguntei o mesmo três vezes e recebi três respostas diferentes.</p>
+
+  <pre>  [1]  calçados; tênis; corrida; asfalto; azul; esportivo
+  [2]  calçados, tênis, corrida, asfalto, azul, esportivos
+  [3]  calçados, esportivos, corrida, azul, tênis, <strong>esportividade</strong></pre>
+
+  <p>Uma delas inventou "esportividade", que não significa nada. Outra trocou a
+  vírgula por ponto e vírgula. <strong>Pedir educadamente no texto não garante
+  nada.</strong></p>
+
+  <p>A solução foi mudar o tipo da resposta: em vez de texto livre, a IA passou a
+  ter que <strong>escolher de uma lista fechada</strong>. Ela deixou de poder
+  inventar, porque não existe onde escrever algo fora da lista.</p>
+
+  <div class="comparacao">
+    <div class="antes"><h5>Antes</h5>
+      Dizia <code>calcado</code> para um produto e <code>calcados</code> para
+      outro. O sistema tratava como categorias sem relação.<br><br>
+      Cadastrei 6 calçados, busquei por calçado: <strong>apareceram 4</strong>.
+    </div>
+    <div class="depois"><h5>Depois</h5>
+      A lista fechada não permite variação. A mesma categoria sempre vira a
+      mesma palavra.<br><br>
+      Mesmo teste: <strong>apareceram os 6</strong>.
+    </div>
+  </div>
+
+  <h4>2 &middot; Tirar a aleatoriedade</h4>
+  <p>Modelos têm um ajuste que controla o quanto podem variar — é o que os faz
+  parecer criativos. Num catálogo isso é defeito: se o mesmo produto pode receber
+  categorias diferentes dependendo do dia, não dá nem para escrever um teste.
+  Zerei esse ajuste.</p>
+
+  <div class="rodape-pg"><span>03 &middot; A inteligência artificial</span><span>5</span></div>
+</section>
+
+<!-- ============ 03 continuação ============ -->
+<section class="pagina">
+  <h4>3 &middot; Fazer a pergunta certa</h4>
+  <p>Aqui errei feio, e um teste barato me salvou.</p>
+  <p>Minha ideia era perguntar palavra por palavra. Antes de implementar, testei:</p>
+
+  <pre>  guardachuva  &rarr;  acessório     <span style="color:#2E6B3E">certo</span>
+  cafeteira    &rarr;  cozinha       <span style="color:#2E6B3E">certo</span>
+  dobravel     &rarr;  calçado       <span style="color:#B5341A">errado</span>
+  resistente   &rarr;  calçado       <span style="color:#B5341A">errado</span>
+  xyzabc       &rarr;  calçado       <span style="color:#B5341A">errado</span></pre>
+
+  <div class="caixa alerta">
+    <span class="rotulo">O que teria acontecido</span>
+    <p><code>xyzabc</code> não é palavra de idioma nenhum e virou calçado. Em
+    treze palavras testadas, a IA usou a opção "isto não é um produto"
+    <strong>uma única vez</strong>.</p>
+    <p>Se eu tivesse implementado assim, o sistema guardaria que "dobrável
+    significa calçado" <strong>para sempre</strong>, e toda cadeira dobrável
+    apareceria na busca por tênis.</p>
+  </div>
+
+  <p>O erro não era da IA, era da minha pergunta. "Dobrável" sozinho não quer
+  dizer nada — nem para ela, nem para uma pessoa. Perguntando sobre a frase
+  inteira, com contexto, ela acerta e sabe recusar:</p>
+
+  <pre>  Guarda-chuva dobrável automático  &rarr;  acessório
+  xyzabc qwerty                    &rarr;  <strong>desconhecida</strong></pre>
+
+  <h4>4 &middot; Deixar uma regra simples fazer o que ela fazia pior</h4>
+  <p>Eu queria que a IA apontasse qual palavra nomeia o produto — "frigideira" em
+  "Frigideira antiaderente de cerâmica". Pedi isso instruindo para copiar uma
+  palavra só. <strong>Ela devolveu a frase inteira em sete dos oito casos.</strong></p>
+
+  <p>A solução não foi insistir, foi perceber que aquilo nem precisava dela. Em
+  português, nome de produto começa pelo substantivo:
+  <strong>Frigideira</strong> antiaderente, <strong>Esteira</strong> ergométrica,
+  <strong>Trena</strong> a laser. Escrevi uma regra de três linhas que pega a
+  primeira palavra significativa.</p>
+
+  <div class="metricas">
+    <div class="metrica"><span class="n r">1 de 8</span><span class="r2">acertos da IA</span></div>
+    <div class="metrica"><span class="n v">16 de 16</span><span class="r2">acertos da regra simples</span></div>
+  </div>
+
+  <div class="caixa azul">
+    <span class="rotulo">Vale guardar essa comparação</span>
+    <p>Não é que a regra seja mais inteligente. É que ela aproveita uma
+    regularidade que existe no problema — e a IA não tinha motivo para respeitar.</p>
+  </div>
+
+  <div class="rodape-pg"><span>03 &middot; A inteligência artificial</span><span>6</span></div>
+</section>
+
+<!-- ============ 03 continuação 2 ============ -->
+<section class="pagina">
+  <h4>5 &middot; Limpar o que ela devolve</h4>
+  <p>Mesmo acertando a categoria, a IA entrega fora do padrão. Na saída real
+  encontrei acentos onde não deveria (<code>calçado</code>), a mesma tag repetida
+  duas vezes, tags com duas palavras (<code>roupa interior</code>) e até português
+  de Portugal (<code>desporto</code> em vez de esporte).</p>
+
+  <div class="caixa neutra">
+    <span class="rotulo">A conclusão que contraria a expectativa</span>
+    <p>Usar inteligência artificial <strong>não dispensou nenhuma</strong> das
+    decisões de estrutura de dados do projeto. Ela substituiu o vocabulário, não
+    a disciplina de organizar.</p>
+  </div>
+
+  <h4>6 &middot; Não perguntar duas vezes a mesma coisa</h4>
+  <p>Cada consulta leva cerca de meio segundo — lento demais para fazer sempre.
+  Então o sistema anota o que aprendeu. E a melhoria que fez diferença foi anotar
+  a <strong>palavra</strong>, não o produto:</p>
+
+  <pre>  "Frigideira antiaderente de cerâmica"  &rarr;  cozinha
+            &darr;
+  o sistema guarda:  <strong>frigideira = cozinha</strong>
+            &darr;
+  qualquer frigideira futura já sai classificada, sem consultar nada</pre>
+
+  <div class="metricas">
+    <div class="metrica"><span class="n v">15 de 15</span><span class="r2">produtos novos sem precisar da IA</span></div>
+    <div class="metrica"><span class="n v">9s &rarr; 0,0002s</span><span class="r2">tempo total desses produtos</span></div>
+  </div>
+
+  <p>Mas generalizar é perigoso. <code>Jogo de chaves de fenda</code> é ferramenta
+  e <code>jogo de facas</code> é cozinha. Se o sistema decidisse que "jogo" é uma
+  das duas, erraria a outra. Hoje ele percebe sozinho quando a mesma palavra
+  aparece em categorias diferentes, <strong>marca como ambígua e para de
+  usá-la</strong>.</p>
+
+  <h4>7 &middot; Saber quando não consultá-la, e quando não confiar nela</h4>
+  <p>Duas descobertas tardias, as duas vindas de ver o programa rodando.</p>
+
+  <div class="caixa alerta">
+    <span class="rotulo">O caso do violão</span>
+    <p>O sistema só chamava a IA quando o produto não gerava tag nenhuma. Um
+    <em>"Violão acústico com cordas de nylon"</em> recebia "nylon" e "material",
+    o sistema achava que já sabia o suficiente, e a IA nunca era consultada.</p>
+    <p>Medindo, o problema era maior: <strong>quatro em cada dez produtos</strong>
+    estavam assim. Uma cadeira de couro não era móvel; um tapete não era
+    decoração. O critério confundia <em>"ter alguma tag"</em> com <em>"saber o
+    que o produto é"</em>.</p>
+  </div>
+
+  <p>A segunda: tentei medir o quanto a IA estava segura, perguntando várias vezes
+  e vendo se mudava de ideia. A ideia era bonita, os números foram modestos —
+  detectou três dos sete erros conhecidos, deixou quatro passar e ainda acusou uma
+  resposta certa. Descobri que <strong>estabilidade não é o mesmo que
+  acerto</strong>: a IA pode estar consistentemente errada.</p>
+
+  <div class="rodape-pg"><span>03 &middot; A inteligência artificial</span><span>7</span></div>
+</section>
+
+<!-- ============ 03 fecho ============ -->
+<section class="pagina">
+  <h3>O que ela continua fazendo mal</h3>
+  <p>Uma limitação não teve conserto: <strong>a IA não sabe dizer "não sei"</strong>.</p>
+
+  <div class="caixa alerta">
+    <span class="rotulo">A camisa que ficou azul</span>
+    <p>Perguntei a cor de uma <em>"Camisa de algodão"</em> — texto que não menciona
+    cor nenhuma. Ela respondeu <strong>azul</strong>. Inventou. Tentei deixar o
+    campo opcional e instruir explicitamente para só responder se a cor estivesse
+    escrita: preencheu igual.</p>
+    <p>Num catálogo isso é grave: o cliente filtra por azul e recebe uma camisa
+    branca.</p>
+  </div>
+
+  <h3>A divisão de trabalho que resultou</h3>
+  <table>
+    <tr><th style="width:26%">quem decide</th><th style="width:28%">o quê</th><th>por quê</th></tr>
+    <tr>
+      <td class="num" style="color:#3A5B85">A IA</td>
+      <td>A categoria do produto</td>
+      <td>Acerta até em produtos que ninguém cadastrou antes</td>
+    </tr>
+    <tr>
+      <td class="num" style="color:#2E6B3E">O vocabulário</td>
+      <td>Cor, material, uso</td>
+      <td>Só informa o que está escrito no texto, nunca inventa</td>
+    </tr>
+  </table>
+
+  <p>O vocabulário é uma lista que escrevi, ligando palavras a tags: "azul" é uma
+  cor, "couro" é um material, "corrida" é um uso. <strong>É burro, mas é
+  exato.</strong> Cada um cuida do que faz bem.</p>
+
+  <h3>O resultado final</h3>
+  <p>Depois das sete melhorias, a IA deixou de ser um gerador imprevisível e virou
+  uma peça confiável:</p>
+
+  <ul>
+    <li>responde sempre a mesma coisa para a mesma entrada;</li>
+    <li>não consegue inventar uma categoria que não existe;</li>
+    <li>sabe recusar quando não reconhece o produto;</li>
+    <li>é consultada uma vez por palavra nova, e nunca mais;</li>
+    <li>o que ela ensina fica num arquivo de texto comum, que uma pessoa pode ler,
+        conferir e corrigir à mão.</li>
+  </ul>
+
+  <div class="caixa verde">
+    <span class="rotulo">O argumento que mais me convenceu</span>
+    <p>Revisando o que a IA tinha classificado, achei sete erros — ela colocou uma
+    trena a laser em artigos de esporte e um colchão em acessórios. Corrigi os
+    sete editando um arquivo de texto, <strong>em um minuto</strong>.</p>
+    <p>Se esse conhecimento estivesse dentro de um modelo treinado, não haveria o
+    que revisar nem como corrigir um caso específico.</p>
+  </div>
+
+  <div class="rodape-pg"><span>03 &middot; A inteligência artificial</span><span>8</span></div>
+</section>
+
+<!-- ============ 04 ============ -->
+<section class="pagina">
+  <div class="secao">
+    <div class="numero">04</div>
+    <div><h2>Guardar na tabela de dispersão</h2>
+    <div class="sub">Parte 3 do enunciado</div></div>
+  </div>
+
+  <div class="caixa azul">
+    <span class="rotulo">A ideia, em termos simples</span>
+    <p>Imagine um armário com mil gavetas numeradas e mil papéis para guardar. Se
+    guardar na ordem que chegam, achar um papel depois exige abrir uma gaveta por
+    vez.</p>
+    <p>A tabela de dispersão faz diferente: ela <strong>faz uma conta com o
+    conteúdo do papel</strong>, e essa conta diz em qual gaveta ele deve ficar.
+    Para achar depois, basta refazer a conta. Você vai direto à gaveta certa, sem
+    abrir nenhuma outra.</p>
+    <p>Não importa se o armário tem mil ou um milhão de gavetas: <strong>o tempo é
+    o mesmo</strong>.</p>
+  </div>
+
+  <h3>Por que não usei o que a linguagem já oferece</h3>
+  <p>O Python já vem com uma estrutura pronta que faz exatamente isso. Usá-la seria
+  uma linha de código. <strong>Não usei de propósito</strong> — a disciplina é
+  sobre entender a estrutura, e a versão pronta esconde justamente o que está
+  sendo estudado.</p>
+
+  <p>Há ainda um motivo prático: a função pronta do Python muda de resultado a
+  cada execução, por segurança da linguagem. Isso tornaria impossível demonstrar
+  em sala que determinado produto vai para determinada gaveta.</p>
+
+  <h3>Quando dois produtos querem a mesma gaveta</h3>
+  <p>Isso tem nome — <strong>colisão</strong> — e não é falha: é inevitável.
+  Existem infinitos textos possíveis e um número limitado de gavetas.</p>
+
+  <p>A pergunta certa não é como evitar, é o que fazer quando acontece. Existem
+  duas respostas, e eu testei as duas.</p>
+
+  <div class="comparacao">
+    <div class="depois"><h5>A que escolhi</h5>
+      Cada gaveta guarda uma <strong>corrente</strong>. O segundo produto é
+      pendurado no primeiro, e a busca percorre a correntinha — normalmente de
+      um ou dois itens.
+    </div>
+    <div class="antes"><h5>A outra</h5>
+      O segundo produto <strong>procura a próxima gaveta livre</strong>, e a
+      busca precisa seguir o mesmo caminho para encontrá-lo.
+    </div>
+  </div>
+
+  <p>Implementei as duas e medi. Com o armário quase cheio:</p>
+
+  <div class="metricas">
+    <div class="metrica"><span class="n v">1,3</span><span class="r2">comparações por busca<br>na estratégia escolhida</span></div>
+    <div class="metrica"><span class="n r">62</span><span class="r2">comparações por busca<br>na outra</span></div>
+    <div class="metrica"><span class="n">48&times;</span><span class="r2">de diferença</span></div>
+  </div>
+
+  <p>O motivo é que, na segunda, um produto deslocado ocupa a gaveta do vizinho,
+  que desloca o próximo, e forma-se <strong>um bloco que cresce sozinho</strong>.
+  Na primeira, uma corrente longa não atrapalha as gavetas vizinhas.</p>
+
+  <div class="rodape-pg"><span>04 &middot; A tabela de dispersão</span><span>9</span></div>
+</section>
+
+<!-- ============ 04 continuação ============ -->
+<section class="pagina">
+  <h3>Como o sistema cresce sozinho</h3>
+  <p>Quanto mais cheio o armário, mais longas as correntes e mais lenta a busca.
+  Por isso o sistema vigia a própria ocupação: <strong>quando passa de 75%, ele
+  dobra de tamanho e redistribui tudo</strong>.</p>
+
+  <div class="caixa alerta">
+    <span class="rotulo">Por que redistribuir é obrigatório</span>
+    <p>A gaveta de cada item depende do número total de gavetas. Mudando esse
+    número, muda a conta. Se eu copiasse os itens para as mesmas posições em um
+    armário maior, eles continuariam lá, mas <strong>a busca passaria a procurar
+    no lugar errado</strong> e não acharia nada.</p>
+    <p>É um erro traiçoeiro porque tudo parece funcionar — só a busca falha.</p>
+  </div>
+
+  <h3>Um detalhe que rendeu uma surpresa</h3>
+  <p>A quantidade de gavetas é sempre um número primo. A teoria diz que isso
+  espalha melhor os itens, e eu confirmei medindo — com uma diferença maior do que
+  esperava.</p>
+
+  <table>
+    <tr><th>quantidade de gavetas</th><th>gavetas usadas</th><th>gavetas vazias</th><th>maior corrente</th></tr>
+    <tr><td>1024 &mdash; potência de dois</td><td class="num">708</td><td class="num" style="color:#B5341A">316</td><td class="num">21</td></tr>
+    <tr><td>1031 &mdash; primo</td><td class="num">1031</td><td class="num" style="color:#2E6B3E">0</td><td class="num">12</td></tr>
+  </table>
+
+  <div class="caixa verde">
+    <span class="rotulo">O resultado</span>
+    <p>Com 1024 gavetas, <strong>316 nunca receberam nada</strong>. Quase um terço
+    do armário ficou vazio enquanto o resto se amontoava. Com 1031, nenhuma sobrou
+    vazia.</p>
+  </div>
+
+  <div class="rodape-pg"><span>04 &middot; A tabela de dispersão</span><span>10</span></div>
+</section>
+
+<!-- ============ 05 ============ -->
+<section class="pagina">
+  <div class="secao">
+    <div class="numero">05</div>
+    <div><h2>Buscar pelas tags</h2>
+    <div class="sub">Parte 4 do enunciado</div></div>
+  </div>
+
+  <h3>A armadilha em que quase caí</h3>
+  <p>Guardar o produto na tabela resolve <em>"me mostre o produto P007"</em>. Mas
+  o enunciado pede outra coisa: achar produtos <strong>pelas tags</strong>.</p>
+
+  <div class="caixa alerta">
+    <span class="rotulo">O erro que quase cometi</span>
+    <p>Com uma tabela só, buscar por tag significaria abrir cada produto e
+    conferir as tags de cada um — ou seja, voltar a percorrer o catálogo inteiro.
+    Exatamente o problema que a estrutura deveria resolver.</p>
+    <p><strong>A estrutura estaria certa, respondendo à pergunta errada.</strong></p>
+  </div>
+
+  <h3>A solução: virar a chave do avesso</h3>
+  <p>Criei uma segunda tabela, construída ao contrário. Na primeira, o produto é a
+  chave. Na segunda, a <strong>tag</strong> é a chave.</p>
+
+  <pre>  tabela de produtos              tabela de tags
+
+  P001 &rarr; Tênis azul              calçado &rarr; P001, P003
+  P002 &rarr; Camisa azul             azul    &rarr; P001, P002
+  P003 &rarr; Chuteira preta          corrida &rarr; P001</pre>
+
+  <p>Agora buscar por "azul" é uma consulta direta que já devolve a resposta
+  pronta. É a mesma ideia do <strong>índice remissivo</strong> no fim de um livro:
+  em vez de ler o livro inteiro procurando uma palavra, você olha a palavra no
+  índice e ela te diz as páginas.</p>
+
+  <div class="metricas">
+    <div class="metrica"><span class="n v">45&times;</span><span class="r2">mais rápido que percorrer<br>o catálogo</span></div>
+    <div class="metrica"><span class="n">50 mil</span><span class="r2">produtos no teste</span></div>
+    <div class="metrica"><span class="n v">cresce</span><span class="r2">quanto maior a loja,<br>maior a vantagem</span></div>
+  </div>
+
+  <h3>O preço, e por que vale</h3>
+  <p>A mesma informação fica em dois lugares. Isso gasta mais memória e cria uma
+  obrigação: ao remover um produto, é preciso limpar os dois. Esquecer o segundo
+  deixa a tag apontando para um produto que não existe mais.</p>
+  <p>Vale a pena porque, numa loja, <strong>busca acontece milhares de vezes para
+  cada cadastro</strong>. Gastar um pouco na hora de guardar para economizar muito
+  na hora de procurar é uma troca óbvia.</p>
+
+  <div class="rodape-pg"><span>05 &middot; Buscar pelas tags</span><span>11</span></div>
+</section>
+
+<!-- ============ 05 continuação ============ -->
+<section class="pagina">
+  <h3>Uma terceira tabela, para o que as tags não cobrem</h3>
+  <p>Percebi um problema testando: produtos classificados pela IA recebiam uma
+  única tag. Uma <em>"Frigideira antiaderente de cerâmica"</em> ficava só com
+  "cozinha", e quem procurasse <strong>cerâmica</strong> não achava — apesar de a
+  palavra estar escrita ali.</p>
+
+  <p>Criei então um terceiro índice, que guarda as palavras literalmente escritas
+  no produto. Os dois convivem e fazem coisas diferentes:</p>
+
+  <table>
+    <tr><th style="width:24%">busca por</th><th style="width:28%">quem encontra</th><th>o que isso exige</th></tr>
+    <tr><td><code>calçado</code></td><td class="num" style="color:#3A5B85">índice de tags</td><td>Entender que tênis é um calçado — a palavra não está escrita no produto</td></tr>
+    <tr><td><code>cerâmica</code></td><td class="num" style="color:#2E6B3E">índice de texto</td><td>Apenas que a palavra esteja no texto — não é categoria de nada</td></tr>
+    <tr><td><code>corrida</code></td><td class="num">os dois</td><td>Está escrita no produto e também é uma tag</td></tr>
+  </table>
+
+  <div class="caixa azul">
+    <span class="rotulo">Por que os dois precisam existir</span>
+    <p><strong>Nenhum dos dois encontra o que o outro encontra.</strong> Um busca
+    por significado, o outro por palavra escrita. São estratégias complementares,
+    não alternativas.</p>
+  </div>
+
+  <h3>As três tabelas do sistema</h3>
+  <div class="fluxo">
+    <div class="passo"><div class="bolha">1</div><div>
+      <span class="t">Produtos por código</span>
+      <span class="d">P001 leva direto ao produto — acesso instantâneo</span>
+    </div></div>
+    <div class="passo"><div class="bolha">2</div><div>
+      <span class="t">Tags por significado</span>
+      <span class="d">calçado leva à lista de todos os calçados</span>
+    </div></div>
+    <div class="passo"><div class="bolha">3</div><div>
+      <span class="t">Palavras escritas</span>
+      <span class="d">cerâmica leva a todo produto que menciona cerâmica</span>
+    </div></div>
+  </div>
+
+  <div class="rodape-pg"><span>05 &middot; Buscar pelas tags</span><span>12</span></div>
+</section>
+
+<!-- ============ 06 ============ -->
+<section class="pagina">
+  <div class="secao">
+    <div class="numero">06</div>
+    <div><h2>Os erros que cometi</h2>
+    <div class="sub">E o que eles mudaram no projeto</div></div>
+  </div>
+
+  <p>Esta seção existe porque, para mim, foi a parte mais valiosa do trabalho. Em
+  vários momentos escrevi uma afirmação que parecia óbvia, fui medir, e o
+  resultado foi diferente.</p>
+
+  <h3>Três vezes em que a medição mudou uma decisão</h3>
+
+  <div class="caixa alerta">
+    <span class="rotulo">Erro 1 &middot; repeti teoria sem verificar</span>
+    <p>Escrevi que a estratégia de colisão que descartei <em>"piora com muitas
+    remoções"</em>. Era o que eu tinha lido. Implementei a alternativa e fiz vinte
+    mil ciclos de remoção para comprovar: <strong>o desempenho não piorou
+    nada</strong>.</p>
+    <p>O motivo real da desvantagem era outro — os blocos que crescem sozinhos.
+    Corrigi a documentação deixando registrado o que eu havia escrito antes.</p>
+  </div>
+
+  <div class="caixa alerta">
+    <span class="rotulo">Erro 2 &middot; achei que uma escolha importava</span>
+    <p>Achava que o limite de ocupação da tabela fazia diferença. Testei com 50% e
+    com 75%, esperando ver distância, e os resultados vieram
+    <strong>idênticos</strong> — porque a tabela dobra de tamanho ao crescer, e a
+    ocupação acaba oscilando na mesma faixa nos dois casos.</p>
+  </div>
+
+  <div class="caixa alerta">
+    <span class="rotulo">Erro 3 &middot; uma ideia bonita que não funcionou</span>
+    <p>Tentei medir o quanto a IA estava segura de cada resposta, perguntando
+    várias vezes. Na prática detectou só <strong>três dos sete erros</strong> que
+    eu já conhecia, e ainda acusou uma resposta certa. Mantive o recurso, mas
+    serve para decidir o que revisar primeiro — não para julgar o que está certo.</p>
+  </div>
+
+  <h3>E os defeitos que só apareceram usando o programa</h3>
+  <table>
+    <tr><th style="width:32%">o que aconteceu</th><th>por quê</th></tr>
+    <tr><td>Uma chuteira preta saía sem tag de cor</td><td>A regra de plural não trata gênero, e "preta" não estava no vocabulário</td></tr>
+    <tr><td>A palavra "de" virou tag</td><td>Eu filtrava as palavras inúteis antes de separar as compostas, e "de homem" passava inteira</td></tr>
+    <tr><td>Um violão foi classificado só pelo material das cordas</td><td>O sistema achava que já tinha tags suficientes e nem consultava a IA</td></tr>
+  </table>
+
+  <div class="caixa verde">
+    <span class="rotulo">De onde vêm os testes do projeto</span>
+    <p>Cada um desses defeitos virou uma verificação automática. É daí que vem a
+    maior parte dos <strong>123 testes</strong>: não de casos que imaginei, mas de
+    erros que cometi.</p>
+  </div>
+
+  <div class="rodape-pg"><span>06 &middot; Os erros que cometi</span><span>13</span></div>
+</section>
+
+<!-- ============ 07 ============ -->
+<section class="pagina">
+  <div class="secao">
+    <div class="numero">07</div>
+    <div><h2>Limites e como usar</h2>
+    <div class="sub">Onde o sistema termina</div></div>
+  </div>
+
+  <p>Listar limitações não é modéstia — é saber onde o sistema termina.</p>
+
+  <table>
+    <tr><th style="width:34%">limitação</th><th>o que significa</th></tr>
+    <tr><td class="num">Os dados somem ao fechar</td><td>O catálogo vive na memória. Salvar em arquivo é assunto de outra disciplina.</td></tr>
+    <tr><td class="num">O vocabulário é limitado</td><td>Palavras fora dele não geram tags de cor ou material. A IA cobre a categoria, não os atributos.</td></tr>
+    <tr><td class="num">As categorias são uma lista fechada</td><td>Um violão vira "áudio", porque não existe categoria para instrumento musical. A lista é fechada de propósito — é o que impede a IA de inventar.</td></tr>
+    <tr><td class="num">A IA precisa de um Mac recente</td><td>Sem ela, o sistema funciona com o vocabulário e com tudo que já foi aprendido, porque isso está gravado em arquivo.</td></tr>
+    <tr><td class="num">O sistema não entende frases</td><td>Reconhece palavras. "Mochila para notebook" recebe a marcação de informática mesmo não sendo um equipamento.</td></tr>
+  </table>
+
+  <h3>Como usar</h3>
+  <p>Não precisa de instalação nem de bibliotecas externas. Só do Python.</p>
+
+  <pre class="escuro">  python3 main.py        <span style="color:#898F97"># só com o vocabulário, funciona em qualquer computador</span>
+  python3 main.py --ia   <span style="color:#898F97"># com a inteligência artificial analisando cada produto</span></pre>
+
+  <p>O programa abre um menu com as opções de cadastrar, listar, buscar por tag,
+  buscar por várias tags ao mesmo tempo, buscar por palavra escrita e ver o estado
+  interno das tabelas.</p>
+
+  <h3>Para conferir que tudo funciona</h3>
+  <pre class="escuro">  python3 -m unittest discover -s testes -t .</pre>
+  <p>São <strong>123 verificações automáticas</strong>. A maior parte nasceu de um
+  defeito real encontrado durante o desenvolvimento, e existe para impedir que ele
+  volte.</p>
+
+  <h3>Para ver as medições citadas aqui</h3>
+  <pre class="escuro">  python3 benchmark.py            <span style="color:#898F97"># busca com índice contra percorrer tudo</span>
+  python3 benchmark_colisoes.py   <span style="color:#898F97"># as duas estratégias de colisão</span></pre>
+
+  <div class="caixa azul" style="margin-top:24px">
+    <span class="rotulo">Para fechar</span>
+    <p>Todo número citado neste documento sai de um desses dois comandos. Nenhum
+    deles é estimativa — <strong>todos podem ser conferidos rodando</strong>.</p>
+  </div>
+
+  <div class="rodape-pg"><span>07 &middot; Limites e como usar</span><span>14</span></div>
+</section>
+
+</body>
+</html>

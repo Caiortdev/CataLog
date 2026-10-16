@@ -1,0 +1,15 @@
+# Binário compilado da ponte Swift.
+#
+# Não é versionado de propósito: executável compilado em uma máquina pode não
+# rodar em outra, e commitar binários confunde o que é código escrito com o que
+# é artefato de build. O adaptador Python compila sozinho quando precisa.
+ia/classifica-produto
+
+__pycache__/
+*.pyc
+
+# Arquivos que o macOS cria sozinho em toda pasta.
+.DS_Store
+
+# Ajustes e cache do editor/assistente: valem só nesta máquina.
+.claude/
