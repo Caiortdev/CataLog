@@ -538,6 +538,6 @@ encontrado durante o desenvolvimento, e existe para impedir que ele volte.
 Para ver as medições de desempenho citadas neste documento:
 
 ```
-python3 benchmark.py            # busca com índice contra busca percorrendo tudo
-python3 benchmark_colisoes.py   # as duas estratégias de colisão comparadas
+python3 ferramentas/benchmark.py            # busca com índice contra busca percorrendo tudo
+python3 ferramentas/benchmark_colisoes.py   # as duas estratégias de colisão comparadas
 ```

@@ -14,8 +14,8 @@ suas palavras.
 
 ```bash
 python3 -m unittest discover -s testes -t .
-python3 benchmark.py
-python3 benchmark_colisoes.py
+python3 ferramentas/benchmark.py
+python3 ferramentas/benchmark_colisoes.py
 python3 main.py --ia
 ```
 
@@ -128,7 +128,7 @@ P002 -> Camisa azul         azul    -> [P001, P002]
 Agora o benchmark:
 
 ```bash
-python3 benchmark.py
+python3 ferramentas/benchmark.py
 ```
 
 > Com 50 mil produtos, a busca com índice é 45 vezes mais rápida que varrer o
@@ -146,7 +146,7 @@ catálogo. Dividindo pelo número de achados, dá constante.
 Esta é a parte mais forte. Não corra.
 
 ```bash
-python3 benchmark_colisoes.py
+python3 ferramentas/benchmark_colisoes.py
 ```
 
 Comece pelo **experimento 1**:

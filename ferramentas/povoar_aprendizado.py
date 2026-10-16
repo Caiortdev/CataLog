@@ -6,7 +6,7 @@ arquivo seria uma caixa-preta: alguém abriria, veria dezenas de linhas e não
 teria como saber de onde vieram nem como refazê-las. Com ele, a lista está à
 vista e o arquivo pode ser reconstruído do zero a qualquer momento.
 
-Rodar com:  python3 povoar_aprendizado.py
+Rodar com:  python3 ferramentas/povoar_aprendizado.py
 
 Precisa de Mac com Apple Intelligence ligado, porque é aqui que o modelo é
 consultado. Depois disso o arquivo gerado funciona em qualquer máquina — essa é
@@ -17,6 +17,17 @@ e-commerce cujas palavras NÃO estão no vocabulário. Produtos que o vocabulár
 já reconhece não aparecem aqui porque nunca chegariam ao modelo — o professor
 só é consultado quando o produto ficaria sem nenhuma tag.
 """
+
+import os
+import sys
+
+# Permite rodar este script direto, de qualquer lugar:
+#     python3 ferramentas/benchmark.py
+#
+# Sem estas linhas o Python procuraria o pacote "catalogo" dentro de
+# ferramentas/, porque é a pasta do script que entra no caminho de busca — não
+# a pasta de onde o comando foi chamado.
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from catalogo.professor import Professor
 from catalogo.tagger import GeradorDeTags

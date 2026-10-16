@@ -65,12 +65,12 @@ inserção seja cara, é que as poucas caras são diluídas entre muitas baratas
 
 ## Os números medidos
 
-Teoria é uma coisa; cronômetro é outra. O `benchmark.py` roda a busca com índice
+Teoria é uma coisa; cronômetro é outra. O `ferramentas/benchmark.py` roda a busca com índice
 e a busca por varredura no mesmo catálogo, procurando a tag `natacao`, que
 aparece em 1% dos produtos.
 
 ```bash
-python3 benchmark.py
+python3 ferramentas/benchmark.py
 ```
 
 Resultado em uma execução (média de 50 repetições cada):
@@ -132,7 +132,7 @@ não só notação.
 ## Como reproduzir
 
 ```bash
-python3 benchmark.py
+python3 ferramentas/benchmark.py
 ```
 
 Os tempos absolutos vão variar de máquina para máquina. O que não varia é o

@@ -44,7 +44,7 @@ Este comando apaga o aprendizado e reconstrói só com os produtos oficiais
 (demora uns 30 segundos):
 
 ```bash
-rm dados/aprendido.json && python3 povoar_aprendizado.py
+rm dados/aprendido.json && python3 ferramentas/povoar_aprendizado.py
 ```
 
 ### 3. Deixe duas abas de terminal abertas
@@ -207,7 +207,7 @@ Digite: **`0`** e Enter.
 ### Passo 10. Por que o índice invertido
 
 ```bash
-python3 benchmark.py
+python3 ferramentas/benchmark.py
 ```
 
 Espere uns 20 segundos. Aponte para a última linha da tabela:
@@ -225,7 +225,7 @@ varredura cresce junto com o catálogo, e a do índice não."*
 ### Passo 11. Por que encadeamento (a parte mais forte)
 
 ```bash
-python3 benchmark_colisoes.py
+python3 ferramentas/benchmark_colisoes.py
 ```
 
 Role até o **experimento 5**, no final:
@@ -331,7 +331,7 @@ no mesmo balde.
 ## Resumo de uma página
 
 ```
-PREPARAÇÃO    rm dados/aprendido.json && python3 povoar_aprendizado.py
+PREPARAÇÃO    rm dados/aprendido.json && python3 ferramentas/povoar_aprendizado.py
               python3 -m unittest discover -s testes -t .
 
 PROGRAMA      python3 main.py --ia
@@ -344,6 +344,6 @@ PROGRAMA      python3 main.py --ia
    7          ver as tabelas por dentro
    0          sair
 
-NÚMEROS       python3 benchmark.py
-              python3 benchmark_colisoes.py
+NÚMEROS       python3 ferramentas/benchmark.py
+              python3 ferramentas/benchmark_colisoes.py
 ```

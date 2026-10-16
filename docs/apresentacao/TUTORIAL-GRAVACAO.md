@@ -47,7 +47,7 @@ cd /Users/caiotorres/P-SOFTWARES/FACULADE/CataLog
 Digite e aperte **Enter**:
 
 ```
-python3 preparar_gravacao.py
+python3 ferramentas/preparar_gravacao.py
 ```
 
 Tem que aparecer **PRONTO PARA GRAVAR**.
@@ -411,7 +411,7 @@ clear
 **2.** Digite e aperte **Enter**:
 
 ```
-python3 benchmark.py
+python3 ferramentas/benchmark.py
 ```
 
 **3.** Espere uns **20 segundos**. Vai montando uma tabela com três linhas.
@@ -448,7 +448,7 @@ clear
 **2.** Digite e aperte **Enter**:
 
 ```
-python3 benchmark_colisoes.py
+python3 ferramentas/benchmark_colisoes.py
 ```
 
 **3.** Vai aparecer bastante coisa. **Role a tela para cima** até achar o bloco
@@ -539,7 +539,7 @@ Você perde os produtos cadastrados, mas não o aprendizado da IA.
 2. Digite:
 
 ```
-python3 preparar_gravacao.py
+python3 ferramentas/preparar_gravacao.py
 ```
 
 ```
@@ -556,7 +556,7 @@ Imprima só esta parte e deixe do lado do teclado.
 
 ```
 ANTES          cd /Users/caiotorres/P-SOFTWARES/FACULADE/CataLog
-               python3 preparar_gravacao.py
+               python3 ferramentas/preparar_gravacao.py
                clear
 
 CENA 2         python3 -m unittest discover -s testes -t .
@@ -583,10 +583,10 @@ CENA 10        7
                0
 
 CENA 11        clear
-               python3 benchmark.py
+               python3 ferramentas/benchmark.py
 
 CENA 12        clear
-               python3 benchmark_colisoes.py
+               python3 ferramentas/benchmark_colisoes.py
 
 CENA 13        clear
 ```

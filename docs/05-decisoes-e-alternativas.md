@@ -78,7 +78,7 @@ processador, porque mantém tudo em um vetor contíguo. Remover exige marcar
 células como "apagadas", e no encadeamento basta religar dois ponteiros.
 
 Esta era a justificativa até ela ser medida. A alternativa foi implementada em
-`catalogo/hashtable_aberta.py` e comparada em `benchmark_colisoes.py`, e o
+`catalogo/hashtable_aberta.py` e comparada em `ferramentas/benchmark_colisoes.py`, e o
 resultado corrigiu a explicação:
 
 - a degradação por acúmulo de marcadores **não apareceu**: após 20 mil ciclos

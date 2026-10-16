@@ -15,10 +15,21 @@ repetida de livro:
 Era a parte mais importante do trabalho e a única sem número. Este arquivo
 corrige isso.
 
-Rodar com:  python3 benchmark_colisoes.py
+Rodar com:  python3 ferramentas/benchmark_colisoes.py
 """
 
 import time
+
+import os
+import sys
+
+# Permite rodar este script direto, de qualquer lugar:
+#     python3 ferramentas/benchmark.py
+#
+# Sem estas linhas o Python procuraria o pacote "catalogo" dentro de
+# ferramentas/, porque é a pasta do script que entra no caminho de busca — não
+# a pasta de onde o comando foi chamado.
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from catalogo.hashtable import TabelaHash, hash_djb2
 from catalogo.hashtable_aberta import TabelaHashAberta

@@ -14,12 +14,23 @@ elas voltarem a ser novidade. O resto do que foi aprendido continua lá.
 
 Rodar antes de cada gravação:
 
-    python3 preparar_gravacao.py
+    python3 ferramentas/preparar_gravacao.py
 """
 
 import json
 import os
 import sys
+
+import os
+import sys
+
+# Permite rodar este script direto, de qualquer lugar:
+#     python3 ferramentas/benchmark.py
+#
+# Sem estas linhas o Python procuraria o pacote "catalogo" dentro de
+# ferramentas/, porque é a pasta do script que entra no caminho de busca — não
+# a pasta de onde o comando foi chamado.
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from catalogo.professor import CACHE
 from catalogo.texto import normalizar
@@ -35,7 +46,7 @@ FRASES_DA_DEMONSTRACAO = [
 def main():
     if not os.path.exists(CACHE):
         print("Nenhum aprendizado encontrado. Rode antes:")
-        print("  python3 povoar_aprendizado.py")
+        print("  python3 ferramentas/povoar_aprendizado.py")
         return 1
 
     with open(CACHE, encoding="utf-8") as arquivo:

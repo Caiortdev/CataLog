@@ -91,7 +91,7 @@ padrões e espalha os restos por toda a tabela. Por isso `_proximo_primo` existe
 e por isso a capacidade pula de 11 para 23, 47, 97, e não de 10 para 20, 40.
 
 Isso é a teoria. Medindo, com as mesmas 5000 chaves em duas capacidades quase
-iguais (`python3 benchmark_colisoes.py`):
+iguais (`python3 ferramentas/benchmark_colisoes.py`):
 
 | capacidade | baldes usados | baldes vazios | maior balde |
 |---|---|---|---|
@@ -274,7 +274,7 @@ corrente fica abaixo de 10, o que confirma que a djb2 está espalhando bem.
 ## Como reproduzir
 
 ```bash
-python3 benchmark_colisoes.py
+python3 ferramentas/benchmark_colisoes.py
 ```
 
 Os cinco experimentos do arquivo correspondem às afirmações deste documento.

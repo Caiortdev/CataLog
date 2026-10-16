@@ -10,10 +10,21 @@ O que observar na saída: o tempo da busca com índice praticamente não muda
 quando o catálogo cresce, enquanto o da varredura cresce junto. Isso é a
 definição de O(1) contra O(n) aparecendo em milissegundos.
 
-Rodar com:  python3 benchmark.py
+Rodar com:  python3 ferramentas/benchmark.py
 """
 
 import time
+
+import os
+import sys
+
+# Permite rodar este script direto, de qualquer lugar:
+#     python3 ferramentas/benchmark.py
+#
+# Sem estas linhas o Python procuraria o pacote "catalogo" dentro de
+# ferramentas/, porque é a pasta do script que entra no caminho de busca — não
+# a pasta de onde o comando foi chamado.
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from catalogo.catalogo import Catalogo
 
